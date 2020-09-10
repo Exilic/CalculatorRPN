@@ -4,24 +4,35 @@ namespace CalculatorRPN
 {
     class Program
     {
+
+        /*
+        
+
+        */
+
         static void Main(string[] args)
 
         {
-            double numberEntry;
-            int stackDepth = 0;
-            double[] theStack = new double[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+            int stackDepth = 4; // Haven't figured out how to intitialize this counter when the first instance happens
+            double[] theStack = new double[] { 1, 2, 3, 4, 0, 0, 0, 0, 0, 0 }; // Haven's figured out how to work with a dynamic stack of numbers, that could be initialized when numbers are entered.
             bool continueEntering = true;
 
             Console.Clear();
             Console.WriteLine("10:\n9:\n8:\n7:\n6:\n5:\n4:\n3:\n2:\n1:");
 
+            var operands = GetOperands(theStack, stackDepth);
+            double result = operands.number1 + operands.number2;
+            Console.WriteLine(result);
+
+
+            /*
             do
             {
                 string userEntry = Console.ReadLine();
 
                 try
                 {
-                    numberEntry = Double.Parse(userEntry);
+                    double numberEntry = Double.Parse(userEntry);
                     theStack[stackDepth] = numberEntry;
                     stackDepth++;
                     Console.Clear();
@@ -58,6 +69,7 @@ namespace CalculatorRPN
             Console.WriteLine(userEntry);
         }
 
+        /*
         static double Multiplication(double number1, double number2)
         {
             double product = number1 * number2;
@@ -91,6 +103,15 @@ namespace CalculatorRPN
         {
 
         }
+        */
 
+            static (double number1, double number2) GetOperands(double[] numberList, int postsEntered) // Googled on return of multiple values and ended up here: https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/builtin-types/value-tuples
+            {
+                double number1 = numberList[postsEntered - 1];
+                double number2 = numberList[postsEntered - 2];
+                return (number1, number2);
+            }
+
+        }
     }
 }
