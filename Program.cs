@@ -6,23 +6,51 @@ namespace CalculatorRPN
     {
 
         /*
-        
+
+        Try to use Console.ReadKey();
+           
 
         */
 
-        static void Main(string[] args)
+        static void Main(string[] args) // This was here from the beginning and the program works, so they are left. Because why break something by acting while still ignorant?
 
         {
-            int stackDepth = 4; // Haven't figured out how to intitialize this counter when the first instance happens
-            double[] theStack = new double[] { 1, 2, 3, 4, 0, 0, 0, 0, 0, 0 }; // Haven's figured out how to work with a dynamic stack of numbers, that could be initialized when numbers are entered.
+            int stackDepth = 4; // Haven't figured out how to intitialize this counter when the first actual instance happens
+            double[] theStack = new double[] { 1, 2, 3, 4, 0, 0, 0, 0, 0, 0 }; // Haven't figured out how to work with a dynamic stack of numbers, with no limit to how many numbers the user can enter and that could be initialized when numbers are entered.
             bool continueEntering = true;
 
-            Console.Clear();
+            Console.Clear(); // Problem here – doesn't manage to get this to clear the window fully from previous entries
             Console.WriteLine("10:\n9:\n8:\n7:\n6:\n5:\n4:\n3:\n2:\n1:");
 
+
             var operands = GetOperands(theStack, stackDepth);
-            double result = operands.number1 + operands.number2;
-            Console.WriteLine(result);
+            string userEntry = Console.ReadLine();
+
+            switch (userEntry)
+            {
+                case "+":
+                    theStack[stackDepth-2] = Addition(operands.number1, operands.number2);
+                    stackDepth--;
+                    break;
+
+                case "/":
+                    theStack[stackDepth - 2] = Division(operands.number1, operands.number2);
+                    stackDepth--;
+                    break;
+
+                case "*":
+                    theStack[stackDepth - 2] = Multiplication(operands.number1, operands.number2);
+                    stackDepth--;
+                    break;
+
+                case "-":
+                    theStack[stackDepth - 2] = Subtraction(operands.number1, operands.number2);
+                    stackDepth--;
+                    break;
+            }
+
+            WriteLineNumbers(theStack, stackDepth);
+
 
 
             /*
@@ -50,8 +78,9 @@ namespace CalculatorRPN
             } while (continueEntering);
 
         }
+        */
 
-        static void WriteLineNumbers(double[] value, int postsEntered)
+            static void WriteLineNumbers(double[] value, int postsEntered)
         {
             for (int i = 10; i > postsEntered; i--)
             {
@@ -62,15 +91,16 @@ namespace CalculatorRPN
                 Console.WriteLine(i + ":   " + value[postsEntered - i]); // Oldest entry should go highest in the console list, therefore the "postsEntered - 1"
             }
         }
-
+            /*
         static void LimitReached()
         {
             string userEntry = Console.ReadLine();
             Console.WriteLine(userEntry);
         }
 
-        /*
-        static double Multiplication(double number1, double number2)
+        */
+
+            static double Multiplication(double number1, double number2)
         {
             double product = number1 * number2;
             return product;
@@ -94,6 +124,8 @@ namespace CalculatorRPN
             return quotient;
         }
 
+            /*
+
         static void Drop()
         {
 
@@ -111,7 +143,6 @@ namespace CalculatorRPN
                 double number2 = numberList[postsEntered - 2];
                 return (number1, number2);
             }
-
         }
     }
 }
