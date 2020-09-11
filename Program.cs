@@ -2,6 +2,16 @@
 
 namespace CalculatorRPN
 {
+
+    /* 
+
+    The calculator mimics some of the functionality of an old Hewlett-Packard calculator. It uses
+    reverse Polish notation, where the operands preceed the operator. In the end I found that basis
+    simple to work with, because the calculator could be built up in unordered steps and tested for
+    partial functionality along the way.   
+     
+    */
+
     class Program
     {
 
@@ -32,6 +42,11 @@ namespace CalculatorRPN
                 else if (stackDepth < 1 && oneOperandCommands)
                 {
                     Console.WriteLine("Error – Too Few Arguments");
+                    System.Threading.Thread.Sleep(2300);
+                }
+                else if (stackDepth > 0 && theStack[stackDepth - 1] == 0 && userEntry.Contains("/"))
+                {
+                    Console.WriteLine("Error – Division By Zero");
                     System.Threading.Thread.Sleep(2300);
                 }
                 else
